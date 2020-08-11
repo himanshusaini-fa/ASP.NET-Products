@@ -41,7 +41,7 @@ namespace Products.Controllers
 
             if (product == null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Product Not Found");
+                return StatusCode(StatusCodes.Status404NotFound, $"{id} not Found");
             }
 
             return Ok(product);
