@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Products.Data;
@@ -22,7 +23,14 @@ namespace Products.Controllers
         public ActionResult<IEnumerable<Product>> GetAllProduct()
         {
             var products = _repository.GetAllProducts();
-            return Ok(products);
+            try
+            {
+                return Ok(products);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Fatal Error");
+            }
         }
 
         // GET: api/Products/5
@@ -33,7 +41,7 @@ namespace Products.Controllers
 
             if (product == null)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Product Not Found");
             }
 
             return Ok(product);
