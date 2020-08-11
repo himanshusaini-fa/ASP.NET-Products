@@ -1,5 +1,4 @@
-﻿using Products.Dtos;
-using Products.Models;
+﻿using Products.Models;
 using System;
 using System.Collections.Generic;
 namespace Products.Data
@@ -11,23 +10,23 @@ namespace Products.Data
         {
             throw new NotImplementedException();
         }
-        public IEnumerable<ProductReadDto> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts()
         {
-            var products = new List<ProductReadDto> {
-            new ProductReadDto(new Product {Id= 1,Name="Amul Milk", Category= "Milk", Brand= "Amul", Description="cow milk", Price=26, SellerId=1, }),
-            new ProductReadDto(new Product {Id= 2,Name="Dairy Milk", Category= "Milk", Brand= "Dairy", Description="cow milk", Price=26, SellerId=1, }),
-            new ProductReadDto(new Product {Id= 3,Name="Mother Milk", Category= "Milk", Brand= "Mother", Description="cow milk", Price=26, SellerId=1, }),
+            var products = new List<Product> {
+            new Product {Id= 1,Name="Amul Milk", Category= "Milk", Brand= "Amul", Description="cow milk", Price=26, SellerId=1, },
+            new Product {Id= 2,Name="Dairy Milk", Category= "Milk", Brand= "Dairy", Description="cow milk", Price=26, SellerId=1, },
+            new Product {Id= 3,Name="Mother Milk", Category= "Milk", Brand= "Mother", Description="cow milk", Price=26, SellerId=1, },
             };
 
             return products;
         }
 
-        public ProductReadDto GetProductById(int id)
+        public Product GetProductById(int id)
         {
-            return new ProductReadDto(new Product { Id = 1, Name = "Amul Milk", Category = "Milk", Brand = "Amul", Description = "cow milk", Price = 26, SellerId = 1, });
+            return new Product { Id = 1, Name = "Amul Milk", Category = "Milk", Brand = "Amul", Description = "cow milk", Price = 26, SellerId = 1, };
         }
 
-        public IEnumerable<ProductReadDto> GetProductsByQuery(string query)
+        public IEnumerable<Product> GetProductsByQuery(string query)
         {
             throw new NotImplementedException();
         }
