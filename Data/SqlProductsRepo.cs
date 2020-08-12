@@ -14,7 +14,11 @@ namespace Products.Data
         }
         public void AddProduct(Product product)
         {
-            //No need to yet
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+            _context.Products.Add(product);
         }
 
         public IEnumerable<Product> GetAllProducts()
