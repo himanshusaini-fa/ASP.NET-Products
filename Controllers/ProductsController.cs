@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ namespace Products.Controllers
 {
     [Route("api/products")]
     [ApiController]
+    //For user authorization to use api
+    //[Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductsRepo _repository;
