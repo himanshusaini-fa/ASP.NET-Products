@@ -72,15 +72,16 @@ namespace Products.Controllers
 
         //DELETE api/commands/{id}
         [HttpDelete("{id}")]
-        public ActionResult DeleteCommand(int id)
+        public ActionResult DeleteProduct(int id)
         {
             try
             {
-                if (_repository.GetProductById(id) == null) return NotFound();
-                _repository.DeleteCommand(_repository.GetProductById(id));
+                var productInDB = _repository.GetProductById(id);
+                if (productInDB == null) return NotFound();
+                _repository.DeleteProduct(productInDB);
                 if (_repository.SaveChanges())
                 {
-                    return Ok();
+                    return NoContent();
                 }
             }
             catch (System.Exception)

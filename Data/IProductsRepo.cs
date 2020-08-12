@@ -10,6 +10,6 @@ namespace Products.Data
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetProductsByQuery(string query);
         void AddProduct(Product product);
-        void DeleteCommand(Product product);
+        void DeleteProduct(Product product);
     }
 }
