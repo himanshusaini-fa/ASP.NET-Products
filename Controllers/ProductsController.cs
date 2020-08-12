@@ -46,5 +46,26 @@ namespace Products.Controllers
 
             return Ok(product);
         }
+
+        // Post: api/Products/
+        [HttpPost]
+        public ActionResult<Product> AddProduct(Product product)
+        {
+            try
+            {
+                _repository.AddProduct(product);
+                if(_repository.SaveChanges())
+                {
+                    return Created("", product);
+                }
+                
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+            return BadRequest();
+        }
+
     }
 }
