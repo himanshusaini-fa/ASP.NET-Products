@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ namespace Products.Controllers
 {
     [Route("api/products")]
     [ApiController]
+    //For user authorization to use api
+    //[Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductsRepo _repository;
@@ -65,6 +68,27 @@ namespace Products.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
             return BadRequest();
+        }
+
+        //DELETE api/commands/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            try
+            {
+                if (_repository.GetProductById(id) == null) return NotFound();
+                _repository.DeleteCommand(_repository.GetProductById(id));
+                if (_repository.SaveChanges())
+                {
+                    return Ok();
+                }
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+
+            return BadRequest("Failed to delete the product");
         }
 
     }

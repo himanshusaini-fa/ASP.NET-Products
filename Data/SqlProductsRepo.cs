@@ -14,6 +14,10 @@ namespace Products.Data
         }
         public void AddProduct(Product product)
         {
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
             _context.Products.Add(product);
         }
 
@@ -30,6 +34,11 @@ namespace Products.Data
         public IEnumerable<Product> GetProductsByQuery(string query)
         {
             throw new NotImplementedException();
+        }
+
+        public void DeleteCommand(Product product)
+        {
+            throw new System.NotImplementedException();
         }
 
         public bool SaveChanges()
