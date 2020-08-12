@@ -11,5 +11,6 @@ namespace Products.Data
         IEnumerable<Product> GetProductsByQuery(string query);
         void AddProduct(Product product);
         void DeleteProduct(Product product);
+        void FullUpdateProduct(Product productFromRepo);
     }
 }

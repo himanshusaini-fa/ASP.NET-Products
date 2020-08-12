@@ -81,9 +81,9 @@ namespace Products.Controllers
         {
             try
             {
-                var productInDB = _repository.GetProductById(id);
-                if (productInDB == null) return NotFound();
-                _repository.DeleteProduct(productInDB);
+                var productFromRepo = _repository.GetProductById(id);
+                if (productFromRepo == null) return NotFound();
+                _repository.DeleteProduct(productFromRepo);
                 if (_repository.SaveChanges())
                 {
                     return NoContent();
@@ -97,5 +97,21 @@ namespace Products.Controllers
             return BadRequest("Failed to delete the product");
         }
 
+        [HttpPut("{id}")]
+        public ActionResult FullUpdateProduct(int id, ProductUpdateDto productUpdateDto)
+        {
+            var productFromRepo = _repository.GetProductById(id);
+            if (productFromRepo == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(productUpdateDto, productFromRepo);
+            _repository.FullUpdateProduct(productFromRepo);
+            if (_repository.SaveChanges())
+            {
+                return NoContent();
+            }
+            return BadRequest();
+        }
     }
 }

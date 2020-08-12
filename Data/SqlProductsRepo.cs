@@ -45,5 +45,10 @@ namespace Products.Data
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        public void FullUpdateProduct(Product productFromRepo)
+        {
+            //Nothing to Implement Yet
+        }
     }
 }
