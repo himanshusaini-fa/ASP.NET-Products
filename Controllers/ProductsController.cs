@@ -18,17 +18,23 @@ namespace Products.Controllers
     {
         private readonly IProductsRepo _repository;
         private readonly IMapper _mapper;
+        //private readonly IApiKeyRepo _apiKeyRepo;
 
-        public ProductsController(IProductsRepo repository, IMapper mapper)
+        public ProductsController(IProductsRepo repository, IMapper mapper/*, IApiKeyRepo apiKeyRepo*/)
         {
             _repository = repository;
             _mapper = mapper;
+            //_apiKeyRepo = apiKeyRepo;
         }
 
         // GET: api/products
         [HttpGet]
         public ActionResult<IEnumerable<ProductReadDto>> GetAllProduct()
         {
+            // if (!_apiKeyRepo.Authenticated("1234567891234567"))
+            // {
+            //     return StatusCode(StatusCodes.Status401Unauthorized, "The Api Key provided is not valid");
+            // }
             var products = _repository.GetAllProducts();
             try
             {

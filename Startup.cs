@@ -32,11 +32,17 @@ namespace Products
 
             //services.AddDbContext<ProductsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("testConnection")));
 
+
+
+            services.AddDbContext<ApiKeyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ApiKeyConnection")));
+
             services.AddDbContext<ProductsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductsConnection")));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IProductsRepo, SqlProductsRepo>();
+
+            services.AddScoped<IApiKeyRepo, SqlApiKeyRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

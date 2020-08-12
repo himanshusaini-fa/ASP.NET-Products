@@ -1,12 +1,12 @@
-// using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-// namespace Products.Models
-// {
-//     public class ApiKey
-//     {
-//         [Key]
-//         public int id;
-//         [Key, Required, MinLength(16)]
-//         string key;
-//     }
-// }
+namespace Products.Models
+{
+    public class ApiKey
+    {
+        [Key]
+        public int id;
+        [Key, Required, MinLength(16)]
+        public string key;
+    }
+}
