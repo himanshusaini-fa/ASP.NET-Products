@@ -82,7 +82,7 @@ namespace Products.Controllers
         }
 
         //DELETE api/commands/{id}
-        [HttpDelete("{id}")]
+        [HttpGet("delete/{id}")]
         public ActionResult DeleteProduct(int id)
         {
             try
