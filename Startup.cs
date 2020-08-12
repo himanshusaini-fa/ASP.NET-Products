@@ -30,7 +30,9 @@ namespace Products
         {
             services.AddControllers();
 
-            services.AddDbContext<ProductsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("testConnection")));
+            //services.AddDbContext<ProductsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("testConnection")));
+
+            services.AddDbContext<ProductsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductsConnection")));
 
             services.AddScoped<IProductsRepo, SqlProductsRepo>();
         }

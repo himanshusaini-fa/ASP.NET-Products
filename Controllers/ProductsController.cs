@@ -18,7 +18,7 @@ namespace Products.Controllers
             _repository = repository;
         }
 
-        // GET: api/Products
+        // GET: api/products
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetAllProduct()
         {
@@ -33,7 +33,7 @@ namespace Products.Controllers
             }
         }
 
-        // GET: api/Products/5
+        // GET: api/products/5
         [HttpGet("{id}")]
         public ActionResult<Product> GetProductById(int id)
         {
@@ -47,18 +47,18 @@ namespace Products.Controllers
             return Ok(product);
         }
 
-        // Post: api/Products/
+        // Post: api/products/
         [HttpPost]
         public ActionResult<Product> AddProduct(Product product)
         {
             try
             {
                 _repository.AddProduct(product);
-                if(_repository.SaveChanges())
+                if (_repository.SaveChanges())
                 {
-                    return Created("", product);
+                    return CreatedAtAction(nameof(GetProductById), new { Id = product.Id }, product);
                 }
-                
+
             }
             catch
             {

@@ -14,7 +14,7 @@ namespace Products.Data
         }
         public void AddProduct(Product product)
         {
-            //No need to yet
+            _context.Products.Add(product);
         }
 
         public IEnumerable<Product> GetAllProducts()
