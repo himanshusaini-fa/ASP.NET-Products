@@ -32,6 +32,11 @@ namespace Products.Data
             throw new NotImplementedException();
         }
 
+        public void DeleteCommand(Product product)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

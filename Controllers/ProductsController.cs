@@ -67,5 +67,26 @@ namespace Products.Controllers
             return BadRequest();
         }
 
+        //DELETE api/commands/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            try
+            {
+                if (_repository.GetProductById(id) == null) return NotFound();
+                _repository.DeleteCommand(_repository.GetProductById(id));
+                if (_repository.SaveChanges())
+                {
+                    return Ok();
+                }
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+
+            return BadRequest("Failed to delete the product");
+        }
+
     }
 }
