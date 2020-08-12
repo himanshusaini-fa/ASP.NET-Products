@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Products.Data;
+using Products.Dtos;
 using Products.Models;
 
 namespace Products.Controllers
@@ -15,20 +17,22 @@ namespace Products.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsRepo _repository;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductsRepo repository)
+        public ProductsController(IProductsRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         // GET: api/products
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetAllProduct()
+        public ActionResult<IEnumerable<ProductReadDto>> GetAllProduct()
         {
             var products = _repository.GetAllProducts();
             try
             {
-                return Ok(products);
+                return Ok(_mapper.Map<IEnumerable<ProductReadDto>>(products));
             }
             catch
             {
@@ -38,7 +42,7 @@ namespace Products.Controllers
 
         // GET: api/products/5
         [HttpGet("{id}")]
-        public ActionResult<Product> GetProductById(int id)
+        public ActionResult<ProductReadDto> GetProductById(int id)
         {
             var product = _repository.GetProductById(id);
 
@@ -47,13 +51,14 @@ namespace Products.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, $"{id} not Found");
             }
 
-            return Ok(product);
+            return Ok(_mapper.Map<ProductReadDto>(product));
         }
 
         // Post: api/products/
         [HttpPost]
-        public ActionResult<Product> AddProduct(Product product)
+        public ActionResult<Product> AddProduct(ProductAddDto productAddDto)
         {
+            var product = _mapper.Map<Product>(productAddDto);
             try
             {
                 _repository.AddProduct(product);
