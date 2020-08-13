@@ -48,11 +48,11 @@ namespace Products.Controllers
         }
 
         // GET: api/products/5
-        [HttpGet("{id}")]
+        [HttpGet("query")]
         public ActionResult<ProductReadDto> GetProductById(int id)
         {
             //int id = ParseQuery(query);
-
+            //Console.WriteLine(name);
             var product = _repository.GetProductById(id);
 
             if (product == null)
@@ -63,33 +63,33 @@ namespace Products.Controllers
             return Ok(_mapper.Map<ProductReadDto>(product));
         }
 
-        private int ParseQuery(string query)
-        {
-            Console.WriteLine(query);
-            if (query.StartsWith("query?id="))              //Not working because query = whatever is before "?"
-            {
-                query = query.Remove(0, 9);
-                Console.WriteLine(query);
-                int id = 0;
-                try
-                {
-                    if (int.TryParse(query, out id))
-                    {
-                        return id;
-                    }
-                    else return 0;
-                }
-                catch (System.Exception)
-                {
-                    return 0;
-                }
-                // foreach (var item in query.Split("&"))
-                // {
-                //     item.Split("=");
-                // }
-            }
-            else return 0;
-        }
+        // private int ParseQuery(string query)
+        // {
+        //     Console.WriteLine(query);
+        //     if (query.StartsWith("query?id="))              //Not working because query = whatever is before "?"
+        //     {
+        //         query = query.Remove(0, 9);
+        //         Console.WriteLine(query);
+        //         int id = 0;
+        //         try
+        //         {
+        //             if (int.TryParse(query, out id))
+        //             {
+        //                 return id;
+        //             }
+        //             else return 0;
+        //         }
+        //         catch (System.Exception)
+        //         {
+        //             return 0;
+        //         }
+        //         // foreach (var item in query.Split("&"))
+        //         // {
+        //         //     item.Split("=");
+        //         // }
+        //     }
+        //     else return 0;
+        // }
 
         // Post: api/products/
         [HttpPost("add")]
