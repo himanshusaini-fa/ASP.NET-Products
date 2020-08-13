@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -47,10 +48,10 @@ namespace Products.Controllers
         }
 
         // GET: api/products/5
-        [HttpGet("{query:string}")]
-        public ActionResult<ProductReadDto> GetProductById(string query)
+        [HttpGet("{id}")]
+        public ActionResult<ProductReadDto> GetProductById(int id)
         {
-            int id = ParseQuery(query);
+            //int id = ParseQuery(query);
 
             var product = _repository.GetProductById(id);
 
@@ -64,20 +65,30 @@ namespace Products.Controllers
 
         private int ParseQuery(string query)
         {
-            if (query.StartsWith("query?id="))
+            Console.WriteLine(query);
+            if (query.StartsWith("query?id="))              //Not working because query = whatever is before "?"
             {
                 query = query.Remove(0, 9);
-                int out = 0;
-                if (int.TryParse(query, out))
+                Console.WriteLine(query);
+                int id = 0;
+                try
                 {
-                    return out;
+                    if (int.TryParse(query, out id))
+                    {
+                        return id;
+                    }
+                    else return 0;
+                }
+                catch (System.Exception)
+                {
+                    return 0;
                 }
                 // foreach (var item in query.Split("&"))
                 // {
                 //     item.Split("=");
                 // }
             }
-            else return null;
+            else return 0;
         }
 
         // Post: api/products/
