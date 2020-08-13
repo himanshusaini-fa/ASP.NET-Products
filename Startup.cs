@@ -43,6 +43,8 @@ namespace Products
             services.AddScoped<IProductsRepo, SqlProductsRepo>();
 
             services.AddScoped<IApiKeyRepo, SqlApiKeyRepo>();
+
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +65,9 @@ namespace Products
             {
                 endpoints.MapControllers();
             });
+            app.UseStaticFiles();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }
