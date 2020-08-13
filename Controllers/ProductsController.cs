@@ -47,12 +47,10 @@ namespace Products.Controllers
             }
         }
 
-        // GET: api/products/5
+        // GET: api/products/query?id=2
         [HttpGet("query")]
         public ActionResult<ProductReadDto> GetProductById(int id)
         {
-            //int id = ParseQuery(query);
-            //Console.WriteLine(name);
             var product = _repository.GetProductById(id);
 
             if (product == null)
@@ -63,35 +61,7 @@ namespace Products.Controllers
             return Ok(_mapper.Map<ProductReadDto>(product));
         }
 
-        // private int ParseQuery(string query)
-        // {
-        //     Console.WriteLine(query);
-        //     if (query.StartsWith("query?id="))              //Not working because query = whatever is before "?"
-        //     {
-        //         query = query.Remove(0, 9);
-        //         Console.WriteLine(query);
-        //         int id = 0;
-        //         try
-        //         {
-        //             if (int.TryParse(query, out id))
-        //             {
-        //                 return id;
-        //             }
-        //             else return 0;
-        //         }
-        //         catch (System.Exception)
-        //         {
-        //             return 0;
-        //         }
-        //         // foreach (var item in query.Split("&"))
-        //         // {
-        //         //     item.Split("=");
-        //         // }
-        //     }
-        //     else return 0;
-        // }
-
-        // Post: api/products/
+        // Post: api/products/add
         [HttpPost("add")]
         public ActionResult<Product> AddProduct(ProductAddDto productAddDto)
         {
@@ -112,8 +82,8 @@ namespace Products.Controllers
             return BadRequest();
         }
 
-        //DELETE api/commands/{id}
-        [HttpGet("delete/{id}")]
+        //DELETE api/products/delete?id=2
+        [HttpGet("delete")]
         public ActionResult DeleteProduct(int id)
         {
             try
@@ -134,7 +104,8 @@ namespace Products.Controllers
             return BadRequest("Failed to delete the product");
         }
 
-        [HttpPut("{id}")]
+        // POST api/products/update?id=2
+        [HttpPost("update")]
         public ActionResult FullUpdateProduct(int id, ProductUpdateDto productUpdateDto)
         {
             var productFromRepo = _repository.GetProductById(id);
@@ -143,7 +114,7 @@ namespace Products.Controllers
                 return NotFound();
             }
             _mapper.Map(productUpdateDto, productFromRepo);
-            _repository.FullUpdateProduct(productFromRepo);
+            _repository.UpdateProduct(productFromRepo);
             if (_repository.SaveChanges())
             {
                 return NoContent();
