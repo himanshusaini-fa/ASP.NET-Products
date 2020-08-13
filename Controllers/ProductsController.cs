@@ -47,9 +47,11 @@ namespace Products.Controllers
         }
 
         // GET: api/products/5
-        [HttpGet("{id}")]
-        public ActionResult<ProductReadDto> GetProductById(int id)
+        [HttpGet("{query:string}")]
+        public ActionResult<ProductReadDto> GetProductById(string query)
         {
+            int id = ParseQuery(query);
+
             var product = _repository.GetProductById(id);
 
             if (product == null)
@@ -60,8 +62,26 @@ namespace Products.Controllers
             return Ok(_mapper.Map<ProductReadDto>(product));
         }
 
+        private int ParseQuery(string query)
+        {
+            if (query.StartsWith("query?id="))
+            {
+                query = query.Remove(0, 9);
+                int out = 0;
+                if (int.TryParse(query, out))
+                {
+                    return out;
+                }
+                // foreach (var item in query.Split("&"))
+                // {
+                //     item.Split("=");
+                // }
+            }
+            else return null;
+        }
+
         // Post: api/products/
-        [HttpPost]
+        [HttpPost("add")]
         public ActionResult<Product> AddProduct(ProductAddDto productAddDto)
         {
             var product = _mapper.Map<Product>(productAddDto);
