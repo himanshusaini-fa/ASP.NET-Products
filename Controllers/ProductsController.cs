@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Products.Data;
 using Products.Dtos;
 using Products.Models;
-
+//H-oQueVF19~w90k-sV6h~50FHkxN5zF.jj --client Secret
 namespace Products.Controllers
 {
     [Route("api/products")]
     [ApiController]
     //For user authorization to use api
-    //[Authorize]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductsRepo _repository;
@@ -29,7 +29,7 @@ namespace Products.Controllers
         }
 
         // GET: api/products
-        [HttpGet]
+        [HttpGet(Name = "GetAllProduct")]
         public ActionResult<IEnumerable<ProductReadDto>> GetAllProduct()
         {
             // if (!_apiKeyRepo.Authenticated("1234567891234567"))
@@ -48,7 +48,7 @@ namespace Products.Controllers
         }
 
         // GET: api/products/query?id=2
-        [HttpGet("query")]
+        [HttpGet("query", Name = "GetProductById")]
         public ActionResult<ProductReadDto> GetProductById(int id)
         {
             var product = _repository.GetProductById(id);
@@ -62,7 +62,7 @@ namespace Products.Controllers
         }
 
         // Post: api/products/add
-        [HttpPost("add")]
+        [HttpPost("add", Name = "AddProduct")]
         public ActionResult<Product> AddProduct(ProductAddDto productAddDto)
         {
             var product = _mapper.Map<Product>(productAddDto);
@@ -83,7 +83,7 @@ namespace Products.Controllers
         }
 
         //DELETE api/products/delete?id=2
-        [HttpGet("delete")]
+        [HttpGet("delete", Name = "DeleteProduct")]
         public ActionResult DeleteProduct(int id)
         {
             try
@@ -105,7 +105,7 @@ namespace Products.Controllers
         }
 
         // POST api/products/update?id=2
-        [HttpPost("update")]
+        [HttpPost("update", Name = "UpdateProduct")]
         public ActionResult FullUpdateProduct(int id, ProductUpdateDto productUpdateDto)
         {
             var productFromRepo = _repository.GetProductById(id);
