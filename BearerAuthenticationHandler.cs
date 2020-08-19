@@ -21,8 +21,9 @@ namespace Products.Authentication
         private readonly ProductsContext _context;
 
         public BearerAuthenticationHandler(IOptionsMonitor<BearerAuthenticationOptions> options,
-            ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+            ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, ProductsContext context) : base(options, logger, encoder, clock)
         {
+            _context = context;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -54,6 +55,7 @@ namespace Products.Authentication
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, Scheme.Name);
+            //return AuthenticateResult.NoResult();
             return AuthenticateResult.Success(ticket);
 
         }

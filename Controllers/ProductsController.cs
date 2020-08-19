@@ -13,6 +13,7 @@ namespace Products.Controllers
 {
     [Route("api/products")]
     [ApiController]
+    [Authorize]
     //For user authorization to use api
     public class ProductsController : ControllerBase
     {
