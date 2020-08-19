@@ -9,5 +9,6 @@ namespace Products.Data
         {
         }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApiKey> ApiKeys { get; set; }
     }
 }

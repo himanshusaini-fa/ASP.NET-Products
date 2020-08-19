@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Products.Data;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Products.Authentication;
 
 namespace Products
 {
@@ -29,25 +30,22 @@ namespace Products
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-                {
-                    opt.Audience = Configuration["AAD:ResourceId"];
-                    opt.Authority = $"{Configuration["AAD:Instance"]}{Configuration["AAD:TenantId"]}";
-                });
-
             services.AddControllers();
 
             //services.AddDbContext<ProductsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("testConnection")));
 
-            services.AddDbContext<ApiKeyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ApiKeyConnection")));
+            //services.AddDbContext<ApiKeyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ApiKeyConnection")));
 
             services.AddDbContext<ProductsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductsConnection")));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddScheme<BearerAuthenticationOptions, BearerAuthenticationHandler>("Bearer", null);
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IProductsRepo, SqlProductsRepo>();
 
-            services.AddScoped<IApiKeyRepo, SqlApiKeyRepo>();
+            //services.AddScoped<IApiKeyRepo, SqlApiKeyRepo>();
 
             services.AddSwaggerDocument(config =>
             {
